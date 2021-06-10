@@ -8,7 +8,7 @@ import { Task } from '../../Task';
   styleUrls: ['./tasks.component.scss'],
 })
 export class TasksComponent implements OnInit {
-  tasks: Task[] = [];          //it is like name :string = "mansi"
+  tasks: Task[] = []; //it is like name :string = "mansi"
 
   constructor(private taskService: TaskService) {}
 
@@ -24,9 +24,12 @@ export class TasksComponent implements OnInit {
       );
   }
 
-  toggleReminder(task:Task){
-    task.reminder = !task.reminder
-    console.log(task.reminder)
+  toggleReminder(task: Task) {
+    task.reminder = !task.reminder;
+    this.taskService.updateTaskReminder(task).subscribe();
   }
 
+  AddTask(task: Task) {
+    this.taskService.addTask(task).subscribe((tasks) => (this.tasks.push(task)));
+  }
 }
